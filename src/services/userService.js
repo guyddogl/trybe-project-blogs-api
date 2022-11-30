@@ -13,11 +13,17 @@ const userSignUp = async (req) => {
 
 const getAllUsers = async () => {
   const users = await models.User.findAll({ attributes: { exclude: ['password'] } });
-  console.log('MEU TESTE', users[0].password);
   return { status: 200, users };
+};
+
+const getUserById = async (id) => {
+  const user = await models.User.findByPk(id, { attributes: { exclude: ['password'] } });
+  if (!user) return { status: 404, message: 'User does not exist' };
+  return { status: 200, user };
 };
 
 module.exports = {
   userSignUp,
   getAllUsers,
+  getUserById,
 };
