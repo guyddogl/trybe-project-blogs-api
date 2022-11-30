@@ -5,9 +5,11 @@ const {
   validateEmail, 
   validatePassword, 
 } = require('../middlewares/validateSignUp');
+const { validateToken } = require('../middlewares/validateToken');
 
 const router = express.Router();
 
 router.post('/', validateDisplayName, validateEmail, validatePassword, userController.userSignUp);
+router.get('/', validateToken, userController.getAllUsers);
 
 module.exports = router;

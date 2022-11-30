@@ -5,7 +5,7 @@ const attributes = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  display_name: {
+  displayName: {
     type: DataTypes.STRING,
   },
   email: {
@@ -23,6 +23,7 @@ module.exports = (sequelize) => {
   const User = sequelize.define('User', attributes, {
     tableName: 'users',
     timestamps: false,
+    underscored: true,
   })
   return User;
 }

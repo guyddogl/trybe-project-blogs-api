@@ -11,6 +11,13 @@ const userSignUp = async (req) => {
   return { status: 201, token };
 };
 
+const getAllUsers = async () => {
+  const users = await models.User.findAll({ attributes: { exclude: ['password'] } });
+  console.log('MEU TESTE', users[0].password);
+  return { status: 200, users };
+};
+
 module.exports = {
   userSignUp,
+  getAllUsers,
 };
