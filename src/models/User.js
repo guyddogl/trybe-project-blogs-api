@@ -21,13 +21,8 @@ const attributes = {
 
 module.exports = (sequelize) => {
   const User = sequelize.define('User', attributes, {
-    tableName: 'Users',
+    tableName: 'users',
     timestamps: false,
   })
-  User.associate = (models) => {
-    User.hasMany(models.BlogPost, {
-      foreignKey: 'userId', as: 'posts'
-    })
-  }
   return User;
 }
