@@ -42,8 +42,23 @@ const createPost = async (req) => {
   return { status: 201, post };
 };
 
+const updatePost = async (req) => {
+  const { title, content } = req.body;
+  const { id } = req.params;
+  const { post } = await getPostById(id);
+  const userID = req.currentUser.data.id;
+  if (post.userId !== userID) return { status: 401, message: 'Unauthorized user' };
+  if (!title || !content) {
+    return { status: 400, message: 'Some required fields are missing' };
+  }
+  await models.BlogPost.update({ title, content }, { where: { id } });
+  const postUpdated = await getPostById(id);
+  return { status: 200, postUpdated: postUpdated.post };
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
+  updatePost,
 };
