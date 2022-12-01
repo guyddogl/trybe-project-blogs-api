@@ -56,9 +56,20 @@ const updatePost = async (req) => {
   return { status: 200, postUpdated: postUpdated.post };
 };
 
+const deletePost = async (req) => {
+  const { id } = req.params;
+  const { post, status, message } = await getPostById(id);
+  if (message) return { status, message };
+  const { data } = req.currentUser;
+  if (post.userId !== data.id) return { status: 401, message: 'Unauthorized user' };
+  // await models.BlogPost.destroy({ where: { id } });
+  return { status: 204 };
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
   updatePost,
+  deletePost,
 };
