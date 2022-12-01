@@ -22,8 +22,16 @@ const getUserById = async (id) => {
   return { status: 200, user };
 };
 
+const deleteUser = async (req) => {
+  const { id } = req.currentUser.data;
+  console.log(id);
+  // await models.User.destroy({ where: { id } });
+  return { status: 204 };
+};
+
 module.exports = {
   userSignUp,
   getAllUsers,
   getUserById,
+  deleteUser,
 };

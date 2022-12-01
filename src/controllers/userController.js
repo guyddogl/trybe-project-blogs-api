@@ -17,9 +17,16 @@ const getUserById = async (req, res) => {
   if (message) return res.status(status).json({ message });
   res.status(status).json(user);
 };
+
+const deleteUser = async (req, res) => {
+  const { status, message, userDeleted } = await userService.deleteUser(req);
+  if (message) return res.status(status).json({ message });
+  res.status(status).json(userDeleted);
+};
  
 module.exports = {
   userSignUp,
   getAllUsers,
   getUserById,
+  deleteUser,
 };
