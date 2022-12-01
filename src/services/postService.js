@@ -1,4 +1,5 @@
 const models = require('../models');
+const categoriesService = require('./categoriesService');
 
 const getAllPosts = async () => {
   const posts = await models.BlogPost.findAll({ 
@@ -21,7 +22,28 @@ const getPostById = async (id) => {
   return { status: 200, post };
 };
 
+const createPost = async (req) => {
+  const { title, content, categoryIds } = req.body;
+  if (!title || !content || !categoryIds) {
+    return { status: 400, message: 'Some required fields are missing' };
+  }
+  const findCategories = await Promise.all(categoryIds.map(async (category) => {
+    const { message } = await categoriesService.getCategoryById(category);
+    if (message) return false;
+    return true;
+  }));
+  const verifyCategories = findCategories.some((category) => category === false);
+  if (verifyCategories) return { status: 400, message: 'one or more "categoryIds" not found' };
+  const { id } = req.currentUser.data;
+  const post = await models.BlogPost.create({ userId: id, title, content, categoryIds });
+  const postId = post.id;
+  await Promise.all(categoryIds.map(async (category) => (
+    categoriesService.createPostCategory(postId, category))));
+  return { status: 201, post };
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
+  createPost,
 };

@@ -21,12 +21,12 @@ const attributes = {
     foreignKey: true
   },
   published: {
-    allowNull: false,
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   },
   updated: {
-    allowNull: false,
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   },
 }
 
