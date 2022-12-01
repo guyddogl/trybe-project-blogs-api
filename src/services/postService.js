@@ -79,7 +79,7 @@ const deletePost = async (req) => {
   if (message) return { status, message };
   const { data } = req.currentUser;
   if (post.userId !== data.id) return { status: 401, message: 'Unauthorized user' };
-  // await models.BlogPost.destroy({ where: { id } });
+  await models.BlogPost.destroy({ where: { id: data.id } });
   return { status: 204 };
 };
 

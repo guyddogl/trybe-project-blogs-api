@@ -24,8 +24,7 @@ const getUserById = async (id) => {
 
 const deleteUser = async (req) => {
   const { id } = req.currentUser.data;
-  console.log(id);
-  // await models.User.destroy({ where: { id } });
+  await models.User.destroy({ where: { id } });
   return { status: 204 };
 };
 
