@@ -4,6 +4,7 @@ const { validateToken } = require('../middlewares/validateToken');
 
 const router = express.Router();
 
+router.get('/search', validateToken, postController.getPostsByQuery);
 router.get('/:id', validateToken, postController.getPostById);
 router.put('/:id', validateToken, postController.updatePost);
 router.delete('/:id', validateToken, postController.deletePost);
